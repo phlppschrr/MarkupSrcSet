@@ -202,7 +202,7 @@ class MarkupSrcSet extends WireData implements Module, ConfigurableModule
             $srcSets[$currentImage->width] = $currentImage->url;
         }
 
-        ksort($srcSets);
+//        ksort($srcSets);
 
         // build srcset string + add helpers
 
@@ -211,20 +211,25 @@ class MarkupSrcSet extends WireData implements Module, ConfigurableModule
 
         foreach ($srcSets as $width => $url) {
 
-            if ($counter == 0) {
-                $srcsetUrls['first'] = $url;
-            }
+//            if ($counter == 0) {
+//                $srcsetUrls['first'] = $url;
+//            }
 
             $srcsetUrls[$counter] = $url;
 
-            if ($counter == count($srcSets) - 1) {
-                $srcsetUrls['last'] = $url;
-            }
+//            if ($counter == count($srcSets) - 1) {
+//                $srcsetUrls['last'] = $url;
+//            }
 
             $srcSetString .= $url . ' ' . $width . 'w,';
 
             $counter++;
         }
+        $keys = array_keys($srcSets);
+        natsort($keys);
+
+        $srcsetUrls['smallest'] = $srcSets[reset($keys)];
+        $srcsetUrls['largest'] = $srcSets[array_pop($keys)];
 
         $img->srcsetUrls = $srcsetUrls;
 
